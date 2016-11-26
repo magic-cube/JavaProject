@@ -10,6 +10,7 @@ public class TimeTurn {
 	private static final int TIME_SLICE=1;
 	private int timeCount;   //时间计数器，完成时间
 	List<Process>  list = new ArrayList<Process>();
+	private int number;      //进程数
 	
 	List<Process> anotherList= new ArrayList<Process>();        //新建的list，用以保存那几个进程
 	
@@ -28,22 +29,23 @@ public class TimeTurn {
 //		p3.setNext(p4);
 //		p4.setNext(p5);
 //		p5.setNext(p1);
-//		
+//		anotherList.add(p1);anotherList.add(p2);anotherList.add(p3);anotherList.add(p4);anotherList.add(p5);
 //		//添加到进程队列
-//		Process temp=p1;
-//		while(!list.contains(temp)){
-//			list.add(temp);
-//			temp=temp.next;
-//		}
+//
+////		Process temp=p1;
+////		while(!list.contains(temp)){
+////			list.add(temp);
+////			temp=temp.next;
+////		}
 //	}
 	
-//	public void waitArrive(Process p,int i){
-//		p=list.get(i);
-//		while((p.arriveTime+1)!=((p.next).arriveTime)){
-//			p.alTime++;
-//			timeCount++;
-//		}
-//	}
+	public void waitArrive(Process p,int i){
+		p=list.get(i);
+		while((p.arriveTime+1)!=((p.next).arriveTime)){
+			p.alTime++;
+			timeCount++;
+		}
+	}
 	//单个时间片内的执行过程
 	public void run(int i){
 		Process p =list.get(i);
@@ -75,15 +77,24 @@ public class TimeTurn {
 			
 			System.out.println("当前执行的进程为："+temp.getName());
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			for(int j=0;i<anotherList.size();j++){
-				Process p1=anotherList.get(i);
-				if(timeCount==p1.arriveTime){
-					list.add(p1);
-				}
-			}
+			//System.out.println(anotherList.size());            测试用，测anotherList的长度
+//			for(Process pp:anotherList){
+//				System.out.println(pp.getName());
+//			}
+//			System.out.println(anotherList.get(1).arriveTime);
+			
+	
+					while(number!=0){
+						list.add(findProcess());
+						list.add(temp);
+					}
+					number--;
+
+					list.add(temp);
+		
 			
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				list.add(temp);
+				
 			
 		}else{     //如果已运行时间不等于服务时间
 			System.out.println();
@@ -106,6 +117,18 @@ public class TimeTurn {
 		}
 		
 	}
+	
+	//星期五晚修改
+	//寻找时间计数器==到达时间的进程
+	public Process findProcess(){
+		for(int i=0;i<anotherList.size();i++){
+			if(timeCount==anotherList.get(i).arriveTime){
+				return anotherList.get(i);
+			}
+		}
+		return null;
+	}
+	
 	public int getNext(Process current,List<Process> list){
 		Process next = current.getNext();
 		int t=0;;
@@ -155,7 +178,7 @@ public class TimeTurn {
 			Process p=Pfactory(name,serviceTime,arriveTime);
 			
 			//添加至进程队列
-			list.add(p);
+			//list.add(p);
 			anotherList.add(p);
 		}
 		
@@ -165,21 +188,22 @@ public class TimeTurn {
 //		}
 		
 		//设置next
-		for(int i=0;i<number;i++){
-//			list.get(i).setNext(list.get(i+1));
-//			if(i==number-1){
-//				list.get(number-1).setNext(list.get(0));
+//		for(int i=0;i<number;i++){
+////			list.get(i).setNext(list.get(i+1));
+////			if(i==number-1){
+////				list.get(number-1).setNext(list.get(0));
+////			}
+//			while(i<=number-1){
+//				//指明他的下一个是谁
+//				if(i==number-1){
+//					list.get(number-1).setNext(list.get(0));
+//				}else{
+//					list.get(i).setNext(list.get(i+1));
+//				}
+//				i++;
 //			}
-			while(i<=number-1){
-				//指明他的下一个是谁
-				if(i==number-1){
-					list.get(number-1).setNext(list.get(0));
-				}else{
-					list.get(i).setNext(list.get(i+1));
-				}
-				i++;
-			}
-		}
+//		}
+		
 //		p1=new Process("p1",4,0);
 //		p2=new Process("p2",3,1);
 //		p3=new Process("p3",4,2);
