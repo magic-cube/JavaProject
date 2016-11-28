@@ -13,41 +13,56 @@ import java.util.Scanner;
 
 public class FF {
 	//空闲分区链
-	List<IdlePartition> list = new LinkedList<IdlePartition>();
+	static List<IdlePartition> list = new LinkedList<IdlePartition>();
 	int number;  //空白分区个数
+	int Plength;
 	public void printInfo(){
 		Scanner in = new Scanner(System.in);
+		System.out.println("请输入作业大小：");
+		Plength=in.nextInt();
 		System.out.println("请输入空白分区的个数：");
 		number=in.nextInt();
 		System.out.println("请输入依次输入每个空白分区的大小，系统会按照输入顺序将空白分区插入空白分区链中：");
 		for(int i=0;i<number;i++){
-			IdlePartition temp =Factory();
-			temp.size=in.nextInt();
+			
+			int a=in.nextInt();
+			IdlePartition temp =Factory(a);
 			list.add(temp);
 		}
 		
 		//迭代器，查看list中的内容
 		Iterator<IdlePartition> it=list.iterator();
+		System.out.println("空闲分区表情况：");
 		while(it.hasNext()){
 			IdlePartition temp=it.next();
 			System.out.print(temp.size+"--->");
 		}
+		System.out.println();
 	}
 	
 	//工厂类
-	public IdlePartition Factory(){
-		return new IdlePartition();
+	public IdlePartition Factory(int a){
+		return new IdlePartition(a);
 	}
 	
+	//遍历寻找第一个满足条件的结点
 	public void find(){
-		
+		for(int i=0;i<list.size();i++){
+			if(Plength<=list.get(i).size){
+				(list.get(i).ssize)-=Plength;
+				break;
+			}
+		}
 	}
 	
 	public static void main(String[] args) {
 		FF f = new FF();
 		f.printInfo();
-		
-
+		f.find();
+		System.out.println("空闲分区表剩余情况：");
+		for(IdlePartition i:list){
+			System.out.print(i.ssize+"---->");
+		}
 	}
 
 }
