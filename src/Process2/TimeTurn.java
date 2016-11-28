@@ -26,7 +26,7 @@ import java.util.Scanner;
 public class TimeTurn {
 	
 	int timeCount;   //时间计数器
-	int timePice=1;	//时间片
+	int timePice;	//时间片
 	int number;
 	
 	List<Process2> list= new ArrayList<Process2>();      //就绪队列
@@ -38,7 +38,7 @@ public class TimeTurn {
 	public void printInfo(){
 		Scanner in = new Scanner(System.in);
 		System.out.println("请输入时间片的大小：");
-		timeCount=in.nextInt();
+		timePice=in.nextInt();
 		System.out.println("请输入要添加的进程个数：");
 		number=in.nextInt();
 		for(int i=0;i<number;i++){
@@ -68,9 +68,9 @@ public class TimeTurn {
 		for(int i=0;i<list2.size();i++){
 			if(timeCount==list2.get(i).arriveTime){
 				return i;
-			}else{
+			}/*else{
 				timeCount++;
-			}
+			}*/
 		}
 		return 0;
 	}
@@ -83,8 +83,14 @@ public class TimeTurn {
 		for(int i=1;i<number;i++){
 			//头出队
 			Process2 p=list.remove(0);
-			timeCount+=timePice;
-			p.alTime+=timePice;
+//			if(p.serviceTime-p.alTime<timePice){
+//				int a=p.serviceTime-p.alTime;
+//				timeCount+=a;
+//				p.alTime+=a;
+//			}else{
+				timeCount+=timePice;
+				p.alTime+=timePice;
+//			}
 			if(p.alTime<p.serviceTime){
 				//匹配入队
 				list.add(list2.get(find()));
@@ -95,13 +101,13 @@ public class TimeTurn {
 				
 			}else{
 				System.out.println("....");
-				System.out.println("进程："+p.name+"已经执行完毕");
-				System.out.println("完成时间为："+timeCount);
-				System.out.println("周转时间为："+(timeCount-p.arriveTime));
-				System.out.println("带权周转时间为："+(timeCount/p.serviceTime));
-				System.out.println();
+//				System.out.println("进程："+p.name+"已经执行完毕");
+//				System.out.println("完成时间为："+timeCount);
+//				System.out.println("周转时间为："+(timeCount-p.arriveTime));
+//				System.out.println("带权周转时间为："+(timeCount/p.serviceTime));
+//				System.out.println();
 				//匹配入队
-				list.add(list2.get(find()));
+//				list.add(list2.get(find()));
 			}
 		}
 		for(Process2 p:list){
@@ -112,15 +118,23 @@ public class TimeTurn {
 	public void run(){
 		while(list.size()>0){
 			Process2 temp=list.remove(0);
-			timeCount+=timePice;              //时间计数器++
-			temp.alTime+=timePice;             //已运行时间加时间片
+//			if(temp.serviceTime-temp.alTime<timePice){
+//				int a=temp.serviceTime-temp.alTime;
+//				timeCount+=a;
+//				temp.alTime+=a;
+//			}else{
+				timeCount+=timePice;              //时间计数器++
+				temp.alTime+=timePice;             //已运行时间加时间片
+//			}
 			if(temp.alTime<temp.serviceTime){
 				System.out.println("当前运行的进程是："+temp.name);
 				list.add(temp);
 			}else{
 				System.out.println();
 				System.out.println("进程："+temp.name+"已执行完毕");
-				System.out.println("完成时间："+timeCount+" "+"周转时间："+(timeCount-temp.arriveTime)+" "+"带权周转时间："+" "+(timeCount/temp.serviceTime));
+				System.out.println("完成时间为："+timeCount);
+				System.out.println("周转时间为："+(timeCount-temp.arriveTime));
+				System.out.println("带权周转时间为："+(timeCount/temp.serviceTime));
 				System.out.println();
 			}
 		}
