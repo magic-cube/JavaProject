@@ -37,6 +37,8 @@ public class TimeTurn {
 	//初始化
 	public void printInfo(){
 		Scanner in = new Scanner(System.in);
+		System.out.println("请输入时间片的大小：");
+		timeCount=in.nextInt();
 		System.out.println("请输入要添加的进程个数：");
 		number=in.nextInt();
 		for(int i=0;i<number;i++){
@@ -66,6 +68,8 @@ public class TimeTurn {
 		for(int i=0;i<list2.size();i++){
 			if(timeCount==list2.get(i).arriveTime){
 				return i;
+			}else{
+				timeCount++;
 			}
 		}
 		return 0;
@@ -91,6 +95,13 @@ public class TimeTurn {
 				
 			}else{
 				System.out.println("....");
+				System.out.println("进程："+p.name+"已经执行完毕");
+				System.out.println("完成时间为："+timeCount);
+				System.out.println("周转时间为："+(timeCount-p.arriveTime));
+				System.out.println("带权周转时间为："+(timeCount/p.serviceTime));
+				System.out.println();
+				//匹配入队
+				list.add(list2.get(find()));
 			}
 		}
 		for(Process2 p:list){
