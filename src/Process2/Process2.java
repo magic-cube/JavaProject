@@ -1,5 +1,7 @@
 package Process2;
-
+/*
+ * ½ø³ÌÀà
+ */
 
 
 public class Process2 {

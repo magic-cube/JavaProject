@@ -1,5 +1,23 @@
 package Process2;
-
+/**
+ * 基于时间片的轮转调度算法
+ * 测试数据
+ * -------
+ * a 0 4
+ * b 1 3
+ * c 2 4
+ * d 3 2
+ * e 4 4
+ * -------
+ * 输出结果  完成时间
+ * ---
+ * a 12
+ * b 10 
+ * c 16 
+ * d 11
+ * e 17
+ * -----
+ */
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,11 +40,9 @@ public class TimeTurn {
 		System.out.println("请输入要添加的进程个数：");
 		number=in.nextInt();
 		for(int i=0;i<number;i++){
-			System.out.print("请输入进程名："+" ");
+			System.out.print("请依次输入进程的  进程名  到达时间   服务时间"+" ");
 			String name=in.next();
-			System.out.print("请输入到达时间："+" ");
 			int arriveTime=in.nextInt();
-			System.out.print("请输入服务时间："+" ");
 			int serviceTime=in.nextInt();
 
 			//每输入一次，调用工厂类，创建对象并赋值
