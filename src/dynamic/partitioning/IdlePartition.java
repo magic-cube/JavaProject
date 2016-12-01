@@ -10,4 +10,8 @@ public class IdlePartition {
 		this.size=size;
 		this.sysize=size;
 	}
+
+	
+	
+
 }
