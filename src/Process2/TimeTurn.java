@@ -66,11 +66,14 @@ public class TimeTurn {
 	//查找
 	public int find(){
 		for(int i=0;i<list2.size();i++){
-			if(timeCount==list2.get(i).arriveTime){
-				return i;
-			}/*else{
-				timeCount++;
-			}*/
+			if(list2.get(i).state!=true){
+				if(timeCount==list2.get(i).arriveTime){
+					list2.get(i).state=true;
+					return i;
+				}/*else{
+					timeCount++;
+				}*/
+			}
 		}
 		return 0;
 	}
@@ -79,27 +82,38 @@ public class TimeTurn {
 	//只运行有限次数，直到所有进程都就绪
 	public void FirstCome(){
 		//头入队
-		list.add(list2.get(find()));
+		//list.add(list2.get(find()));
+		
+		/*
+		 *假设到达时间已经有序，让第一个进程入队 
+		 */
+		list.add(list2.get(0));
+		timeCount=list.get(0).arriveTime;
+		//
 		for(int i=1;i<number;i++){
 			//头出队
 			Process2 p=list.remove(0);
-//			if(p.serviceTime-p.alTime<timePice){
-//				int a=p.serviceTime-p.alTime;
-//				timeCount+=a;
-//				p.alTime+=a;
-//			}else{
+			if(p.serviceTime-p.alTime<timePice){
+				int a=p.serviceTime-p.alTime;
+				timeCount+=a;
+				p.alTime+=a;
+			}else{
 				timeCount+=timePice;
 				p.alTime+=timePice;
-//			}
-			if(p.alTime<p.serviceTime){
+			}
+			if(p.alTime<p.serviceTime){         //未执行完
 				//匹配入队
 				list.add(list2.get(find()));
+				/*
+				 * 
+				 */
+
 				//头入队
 				list.add(p);
 			
 				
 				
-			}else{
+			}else{           //执行完了
 				System.out.println("....");
 //				System.out.println("进程："+p.name+"已经执行完毕");
 //				System.out.println("完成时间为："+timeCount);
@@ -118,14 +132,14 @@ public class TimeTurn {
 	public void run(){
 		while(list.size()>0){
 			Process2 temp=list.remove(0);
-//			if(temp.serviceTime-temp.alTime<timePice){
-//				int a=temp.serviceTime-temp.alTime;
-//				timeCount+=a;
-//				temp.alTime+=a;
-//			}else{
+			if(temp.serviceTime-temp.alTime<timePice){
+				int a=temp.serviceTime-temp.alTime;
+				timeCount+=a;
+				temp.alTime+=a;
+			}else{
 				timeCount+=timePice;              //时间计数器++
 				temp.alTime+=timePice;             //已运行时间加时间片
-//			}
+			}
 			if(temp.alTime<temp.serviceTime){
 				System.out.println("当前运行的进程是："+temp.name);
 				list.add(temp);

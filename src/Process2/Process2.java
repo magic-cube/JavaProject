@@ -10,7 +10,7 @@ public class Process2 {
 	/*private*/ int arriveTime;  //到达时间
 	
 	/*private*/ int alTime;     //已运行时间
-	
+	boolean state=false;
 	Process next;     //指向下个结点
 	
 	
