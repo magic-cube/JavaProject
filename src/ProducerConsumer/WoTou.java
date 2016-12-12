@@ -2,6 +2,7 @@ package ProducerConsumer;
 /**
  * Œ—Õ∑¿‡...
  * javaBean
+ * 
  * @author hc
  *
  */
